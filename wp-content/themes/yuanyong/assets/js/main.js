@@ -143,6 +143,42 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !lb.hidden) closeLb(); });
   }
 
+
+  /* featured project slider */
+  var feat = document.querySelector('.featured');
+  if (feat) {
+    var fSlides = feat.querySelectorAll('.feat-slide');
+    var fTexts = feat.querySelectorAll('.feat-text');
+    var fCur = feat.querySelector('.feat-count .cur');
+    var fIdx = 0;
+    var fShow = function (i) {
+      fIdx = (i + fSlides.length) % fSlides.length;
+      fSlides.forEach(function (el, n) { el.classList.toggle('is-active', n === fIdx); });
+      fTexts.forEach(function (el, n) { el.classList.toggle('is-active', n === fIdx); });
+      if (fCur) fCur.textContent = String(fIdx + 1).padStart(2, '0');
+    };
+    var prevBtn = feat.querySelector('.feat-prev');
+    var nextBtn = feat.querySelector('.feat-next');
+    if (prevBtn) prevBtn.addEventListener('click', function () { fShow(fIdx - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { fShow(fIdx + 1); });
+  }
+
+
+  /* in-page menu links: smooth scroll, works in the Customizer preview too */
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var id = decodeURIComponent(a.getAttribute('href').slice(1));
+      var target = id ? document.getElementById(id) : null;
+      if (!target) return;
+      e.preventDefault();
+      var head = document.querySelector('.site-header');
+      var offset = head ? head.getBoundingClientRect().height : 0;
+      var y = target.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
+      if (history.replaceState) history.replaceState(null, '', '#' + id);
+    });
+  });
+
   /* year in footer */
   document.querySelectorAll('.year').forEach(function (el) { el.textContent = new Date().getFullYear(); });
 })();
