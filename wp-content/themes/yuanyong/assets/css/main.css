@@ -123,10 +123,11 @@ section[id] { scroll-margin-top: 88px; }
 .about > div { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 .about .body { gap: 32px; }
 .about .body p { font-size: 18px; color: var(--fg-2); line-height: 1.9; }
-.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--line); }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line); }
 .stats div { background: var(--bg); padding: 24px 24px 24px 0; display: flex; flex-direction: column; gap: 6px; }
 .stats div + div { padding-left: 24px; }
-.stats b { font-family: var(--f-latin); font-weight: 300; font-size: 44px; line-height: 1; }
+.stats b { font-family: var(--f-latin); font-weight: 300; font-size: clamp(32px, 3.2vw, 44px); line-height: 1; white-space: nowrap; }
+@media (max-width: 600px) { .stats { grid-template-columns: 1fr; } .stats div, .stats div + div { padding: 20px 0; } }
 .stats b small { font-size: 20px; color: var(--red-text); }
 .stats span { font-size: 14px; color: var(--muted); }
 
